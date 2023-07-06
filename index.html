@@ -44,6 +44,7 @@
 </head>
 <body>
     <div class="navigation-bar">
+        <button id="back">&nbsp;<&nbsp;</button>
         <input id="urlInput" type="text" placeholder="Ingrese una URL">
         <button id="goButton">Ir</button>
     </div>
@@ -54,11 +55,36 @@
 
             const urlInput = document.getElementById('urlInput');
             const goButton = document.getElementById('goButton');
+            const backButton = document.getElementById('back');
+
+            let urlsHistory = [];
 
             goButton.addEventListener('click', () => {
-                const url = urlInput.value;
-                ipcRenderer.send('navigate', url);
+                loadURL();
             });
+
+            backButton.addEventListener('click', () => {
+                if(urlsHistory.length >= 2){
+                    let lastUrl = urlsHistory[urlsHistory.length - 2];
+                    urlsHistory.splice(urlsHistory.length - 1, 1);
+                    loadURL(lastUrl);
+                }
+            });
+
+            urlInput.addEventListener('keypress', function(e) {
+                if(e.keyCode === 13){
+                    loadURL();
+                }
+            })
+
+            function loadURL(_url = ""){
+                let url = (_url == "") ? urlInput.value : _url;
+                if(url.indexOf('https://') == -1){
+                    url = 'https://' + url;
+                }
+                urlsHistory.push(url);
+                ipcRenderer.send('navigate', url);
+            }
         }
       </script>
 </body>
