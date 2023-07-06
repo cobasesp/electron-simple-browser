@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Document</title>
+    <style>
+        body {
+            margin: 0;
+            background: #202124;
+        }
+        
+        .navigation-bar {
+          display: flex;
+          padding: 5px;
+        }
+  
+        .navigation-bar input {
+            margin-right: 10px;
+            width: 94%;
+            height: 20px;
+            border-radius: 8px;
+            border: 1px solid #fff;
+        }
+  
+        .navigation-bar button {
+            width: 3%;
+        }
+      </style>
+</head>
+<body>
+    <div class="navigation-bar">
+        <input id="urlInput" type="text" placeholder="Ingrese una URL">
+        <button id="goButton">Ir</button>
+    </div>
+  
+    <div id="browserViewContainer"></div>
+
+
+    <script>
+        onload = () => {
+            const { ipcRenderer } = require('electron');
+
+            const urlInput = document.getElementById('urlInput');
+            const goButton = document.getElementById('goButton');
+
+            goButton.addEventListener('click', () => {
+                const url = urlInput.value;
+                ipcRenderer.send('navigate', url);
+            });
+
+            // const { ipcRenderer, remote } = require('electron');
+
+            // const urlInput = document.getElementById('urlInput');
+            // const goButton = document.getElementById('goButton');
+            // const browserViewContainer = document.getElementById('browserViewContainer');
+
+            // const mainWindow = remote.getCurrentWindow();
+            // const view = mainWindow.getBrowserView();
+            // browserViewContainer.appendChild(view.webContents.getOwnerBrowserWindow().getBrowserView());
+
+            // goButton.addEventListener('click', () => {
+            //     const url = urlInput.value;
+            //     ipcRenderer.send('navigate', url);
+            // });
+        }
+      </script>
+</body>
+</html>
