@@ -37,12 +37,14 @@ app.on('ready', () => {
     webView.setAutoResize({ width: true, height: true });
 
     view.webContents.loadURL(path.join(__dirname, 'index.html'));
+    webView.webContents.loadURL(path.join(__dirname, 'notab.html'));
 
     mainWindow.once('ready-to-show',()=>{
         mainWindow.show()
     });
 
     view.webContents.openDevTools({ mode: "detach" });
+    webView.webContents.openDevTools({ mode: "detach" });
 
     let lastHandle;
     function handleWindowResize(e) {

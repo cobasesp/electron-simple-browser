@@ -6,8 +6,9 @@
         body {
             margin: 0;
             background: #202124;
+            font-family: Helvetica, Arial, sans-serif;
         }
-        
+
         .navigation-bar {
           display: flex;
           padding: 5px;
@@ -18,11 +19,26 @@
             width: 94%;
             height: 20px;
             border-radius: 8px;
-            border: 1px solid #fff;
+            border: 1px solid #ddd;
+            background: #202124;
+            color: #ddd;
+            padding: 2px 10px;
+            font-size: 16px;
         }
   
         .navigation-bar button {
             width: 3%;
+            cursor: pointer;
+            background: #202124;
+            color: #ddd;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            transition: ease-in-out 0.5s;
+        }
+
+        .navigation-bar button:hover{
+            background: #ddd;
+            color: #202124;
         }
       </style>
 </head>
@@ -31,9 +47,6 @@
         <input id="urlInput" type="text" placeholder="Ingrese una URL">
         <button id="goButton">Ir</button>
     </div>
-  
-    <div id="browserViewContainer"></div>
-
 
     <script>
         onload = () => {
@@ -46,21 +59,6 @@
                 const url = urlInput.value;
                 ipcRenderer.send('navigate', url);
             });
-
-            // const { ipcRenderer, remote } = require('electron');
-
-            // const urlInput = document.getElementById('urlInput');
-            // const goButton = document.getElementById('goButton');
-            // const browserViewContainer = document.getElementById('browserViewContainer');
-
-            // const mainWindow = remote.getCurrentWindow();
-            // const view = mainWindow.getBrowserView();
-            // browserViewContainer.appendChild(view.webContents.getOwnerBrowserWindow().getBrowserView());
-
-            // goButton.addEventListener('click', () => {
-            //     const url = urlInput.value;
-            //     ipcRenderer.send('navigate', url);
-            // });
         }
       </script>
 </body>
