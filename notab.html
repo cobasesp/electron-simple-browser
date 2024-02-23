@@ -25,5 +25,14 @@
         <p>Type a web in the navigation bar above to start</p>
     </div>
 
+    <script>
+        onload = () => {
+            const { ipcRenderer } = require('electron');
+
+            ipcRenderer.on('test-menu', function() {
+                alert("functiona el menu")
+            })
+        }
+      </script>
 </body>
 </html>
