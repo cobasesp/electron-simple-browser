@@ -46,6 +46,9 @@
     <div class="navigation-bar">
         <button id="back">&nbsp;<&nbsp;</button>
         <input id="urlInput" type="text" placeholder="Ingrese una URL">
+        <button id="no-cookies">
+            <img src="./cookie.svg" alt="">
+        </button>
         <button id="goButton">Ir</button>
     </div>
 
@@ -55,6 +58,7 @@
 
             const urlInput = document.getElementById('urlInput');
             const goButton = document.getElementById('goButton');
+            const noCookieButton = document.getElementById('no-cookies');
             const backButton = document.getElementById('back');
 
             let urlsHistory = [];
@@ -77,14 +81,26 @@
                 }
             })
 
-            function loadURL(_url = ""){
+            noCookieButton.addEventListener('click', () => {
+                loadURL("", true)
+            })
+
+            function loadURL(_url = "", noCookies = false){
                 let url = (_url == "") ? urlInput.value : _url;
                 if(url.indexOf('https://') == -1){
                     url = 'https://' + url;
                 }
+                if(noCookies === true) {
+                    url = `https://page-scrapper.fly.dev/page?url=${url}`;
+                }
                 urlsHistory.push(url);
                 ipcRenderer.send('navigate', url);
             }
+
+            // Change searchbar url when navigate
+            ipcRenderer.on('port', (e, msg) => {
+                urlInput.value = msg.url;
+            })
         }
       </script>
 </body>

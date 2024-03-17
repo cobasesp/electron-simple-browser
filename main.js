@@ -28,6 +28,7 @@ app.on('ready', () => {
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
+            preload: path.join(__dirname + '/preload.js')
         },
     });
 
@@ -73,6 +74,12 @@ app.on('ready', () => {
     // Navigate event launched by searchbar view
     ipcMain.on('navigate', (event, url) => {
         webView.webContents.loadURL(url);
+    });
+
+    // When user click a link inside webview
+    ipcMain.on('navigation', (event, url) => {
+        console.log(url)
+        view.webContents.postMessage('port', { url: url })
     });
 
     // Create new menu
